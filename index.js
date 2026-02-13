@@ -7,11 +7,8 @@ const client = new Client({
   ]
 });
 
-// حذف التوكن من هنا
-// const token = "MTQ3MTYzOTI0MzM1MTY1NDQyMQ.Ghz5Ax.W-yKEXCDvGxcsvmUj4UClKzPXJXLnAHKm2E86Y";
-
-// بدلها استخدم Environment Variable
-const token = process.env.TOKEN;
+// التوكن الجديد هنا
+const token = "MTQ3MTYzOTI0MzM1MTY1NDQyMQ.G3Ahs2.yFwmcsv1e828oXwBeiXKrrr16kN2h12kS8ZVok";
 
 const GUILD_ID = "950021591901822997";
 const BUSY_CHANNEL_ID = "1162412320945885234";
