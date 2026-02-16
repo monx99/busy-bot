@@ -7,8 +7,8 @@ const client = new Client({
   ]
 });
 
-// التوكن الجديد هنا
-const token = "MTQ3MTYzOTI0MzM1MTY1NDQyMQ.G3Ahs2.yFwmcsv1e828oXwBeiXKrrr16kN2h12kS8ZVok";
+// التوكن مخفي وآمن
+const token = process.env.TOKEN;
 
 const GUILD_ID = "950021591901822997";
 const BUSY_CHANNEL_ID = "1162412320945885234";
@@ -23,13 +23,10 @@ client.once('ready', () => {
 client.on('voiceStateUpdate', (oldState, newState) => {
   const memberId = newState.id;
 
-  // إذا الشخص صار ميوت
   if ((newState.selfMute || newState.serverMute) && newState.channel?.id !== BUSY_CHANNEL_ID) {
     
-    // منع إنشاء أكثر من interval لنفس الشخص
     if (mutedIntervals.has(memberId)) return;
 
-    // إنشاء interval كل 3 دقائق (180000 مللي ثانية)
     const interval = setInterval(async () => {
       try {
         const currentState = newState.guild.members.cache.get(memberId).voice;
@@ -43,12 +40,11 @@ client.on('voiceStateUpdate', (oldState, newState) => {
       } catch (error) {
         console.error("خطأ عند محاولة نقل الشخص:", error);
       }
-    }, 3 * 60 * 1000); // 3 دقائق
+    }, 3 * 60 * 1000); // كل 3 دقائق
 
     mutedIntervals.set(memberId, interval);
 
   } else {
-    // إذا رفع الميوت، نلغي interval
     if (mutedIntervals.has(memberId)) {
       clearInterval(mutedIntervals.get(memberId));
       mutedIntervals.delete(memberId);
